@@ -30,19 +30,26 @@ object(kite).
 % solve the puzzle
 solve :-
 	% Permute the days amongst the cadets fourth class
-	day(ChenDay), day(GarciaDay), day(JonesDay), day(SmithDay),
-	all_different([ChenDay, GarciaDay, JonesDay, SmithDay]),
+	% day(ChenDay), day(GarciaDay), day(JonesDay), day(SmithDay),
+	% all_different([ChenDay, GarciaDay, JonesDay, SmithDay]),
+
+	% Permute the cadets amongst the days
+	c4c(TuesdayCadet), c4c(WednesdayCadet),
+	c4c(ThursdayCadet), c4c(FridayCadet),
+	all_different([TuesdayCadet, WednesdayCadet,
+		ThursdayCadet, FridayCadet]),
 
 	% Permute the objects amongst the cadets fourth class
-	object(ChenObject), object(GarciaObject),
-	object(JonesObject), object(SmithObject),
-	all_different([ChenObject, GarciaObject, JonesObject, SmithObject]),
+	object(TuesdayObject), object(WednesdayObject),
+	object(ThursdayObject), object(FridayObject),
+	all_different([TuesdayObject, WednesdayObject,
+		ThursdayObject, FridayObject]),
 
 	% Assign the objects and days to their cadets fourth class
-	Triples = [ [chen, ChenObject, ChenDay],
-	            [garcia, GarciaObject, GarciaDay],
-	            [jones, JonesObject, JonesDay],
-	            [smith, SmithObject, SmithDay] ],
+	Triples = [ [TuesdayCadet, TuesdayObject, tuesday],
+	            [WednesdayCadet, WednesdayObject, wednesday],
+	            [ThursdayCadet, ThursdayObject, thursday],
+	            [FridayCadet, FridayObject, friday] ],
 
 	% 1. C4C Smith did not see a weather balloon, nor kite.
 	\+ member([smith, balloon, _], Triples),
@@ -76,10 +83,10 @@ solve :-
 	\+ member([_, balloon, wednesday], Triples),
 
 	% Print solutions
-	tell(chen, ChenObject, ChenDay),
-	tell(garcia, GarciaObject, GarciaDay),
-	tell(jones, JonesObject, JonesDay),
-	tell(smith, SmithObject, SmithDay).
+	tell(TuesdayCadet, TuesdayObject, tuesday),
+	tell(WednesdayCadet, WednesdayObject, wednesday),
+	tell(ThursdayCadet, ThursdayObject, thursday),
+	tell(FridayCadet, FridayObject, friday).
 
 % determines if all members of the passed list are different
 all_different([H | T]) :- member(H, T), !, fail.
